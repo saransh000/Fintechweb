@@ -23,20 +23,10 @@ const teacherRouter = require('./routes/teacher');
 const studentRouter = require('./routes/student');
 const adminRouter = require('./routes/admin');
 
-app.use('/auth', authRouter);
-app.use('/teacher', teacherRouter);
-app.use('/student', studentRouter);
-app.use('/admin', adminRouter);
-
-// Serve static assets in production
-if (process.env.NODE_ENV === 'production') {
-  // Set static folder
-  app.use(express.static('../frontend/build'));
-
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '..', 'frontend', 'build', 'index.html'));
-  });
-}
+app.use('/api/auth', authRouter);
+app.use('/api/teacher', teacherRouter);
+app.use('/api/student', studentRouter);
+app.use('/api/admin', adminRouter);
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);

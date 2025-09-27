@@ -9,7 +9,7 @@ const StudentDashboard = ({ token }) => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/student/courses', {
+        const res = await axios.get('/api/student/courses', {
           headers: { 'x-auth-token': token },
         });
         setCourses(res.data);
@@ -26,7 +26,7 @@ const StudentDashboard = ({ token }) => {
 
   const fetchAttendance = async (courseId) => {
     try {
-      const res = await axios.get(`http://localhost:5000/student/attendance/${courseId}`, {
+      const res = await axios.get(`/api/student/attendance/${courseId}`, {
         headers: { 'x-auth-token': token },
       });
       setAttendance((prev) => ({ ...prev, [courseId]: res.data }));

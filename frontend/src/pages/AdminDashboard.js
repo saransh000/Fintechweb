@@ -15,9 +15,9 @@ const AdminDashboard = ({ token }) => {
     const fetchData = async () => {
       try {
         const [coursesRes, studentsRes, teachersRes] = await Promise.all([
-          axios.get('http://localhost:5000/teacher/courses', { headers: { 'x-auth-token': token } }),
-          axios.get('http://localhost:5000/admin/students', { headers: { 'x-auth-token': token } }),
-          axios.get('http://localhost:5000/admin/teachers', { headers: { 'x-auth-token': token } }),
+          axios.get('/api/teacher/courses', { headers: { 'x-auth-token': token } }),
+          axios.get('/api/admin/students', { headers: { 'x-auth-token': token } }),
+          axios.get('/api/admin/teachers', { headers: { 'x-auth-token': token } }),
         ]);
         setCourses(coursesRes.data);
         setStudents(studentsRes.data);
@@ -36,14 +36,14 @@ const AdminDashboard = ({ token }) => {
   const handleCreateCourse = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/admin/courses',
+      await axios.post('/api/admin/courses',
         { name: courseName, teacherId: selectedTeacher },
         { headers: { 'x-auth-token': token } }
       );
       setCourseName('');
       setSelectedTeacher('');
       // Refresh courses list
-      const coursesRes = await axios.get('http://localhost:5000/teacher/courses', { headers: { 'x-auth-token': token } });
+      const coursesRes = await axios.get('/api/teacher/courses', { headers: { 'x-auth-token': token } });
       setCourses(coursesRes.data);
     } catch (err) {
       setError('Failed to create course');
@@ -54,7 +54,7 @@ const AdminDashboard = ({ token }) => {
   const handleEnrollStudent = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`http://localhost:5000/admin/courses/${selectedCourse}/enroll`,
+      await axios.post(`/api/admin/courses/${selectedCourse}/enroll`,
         { studentId: selectedStudent },
         { headers: { 'x-auth-token': token } }
       );
